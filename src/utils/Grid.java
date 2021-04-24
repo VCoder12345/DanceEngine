@@ -1,7 +1,5 @@
 package utils;
 
-import maths.Vector2;
-
 public abstract class Grid<TCell> {
 	public int anzx, anzy;
 	public Vector2 cellSize;

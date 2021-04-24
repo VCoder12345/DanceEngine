@@ -1,7 +1,7 @@
 package physics;
 
 import ecs.EComponent;
-import maths.Vector2;
+import utils.Vector2;
 
 public class Body extends EComponent {
 	public float mass;

@@ -1,4 +1,4 @@
-package maths;
+package utils;
 
 public class Utils {
 	public static float clampf(float x, float min, float max) {
@@ -21,5 +21,17 @@ public class Utils {
 		}
 		
 		return nx;
+	}
+	
+	public static float lerp(float a, float b, float t) {
+		return a + t * (b - a);
+	}
+	
+	public static Vector2 lerp(Vector2 v1, Vector2 v2, float t) {
+		Vector2 nv = new Vector2();
+		nv.x = lerp(v1.x, v2.x, t);
+		nv.y = lerp(v1.y, v2.y, t);
+		
+		return nv;
 	}
 }

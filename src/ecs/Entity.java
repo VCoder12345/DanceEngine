@@ -5,7 +5,7 @@ import java.util.HashMap;
 import action.Action;
 import action.ActionManager;
 import game.Game;
-import maths.Vector2;
+import utils.Vector2;
 
 public class Entity {
 	public String name;

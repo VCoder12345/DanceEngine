@@ -9,9 +9,9 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
-import maths.Vector2;
 import parser.XMLNode;
 import parser.XMLParser;
+import utils.Vector2;
 
 public class TiledLoader {
 	

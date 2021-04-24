@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 
 import camera.CameraComponent;
 import ecs.Transform;
-import maths.Vector2;
+import utils.Vector2;
 
 public abstract class Model {
 	public Model() {

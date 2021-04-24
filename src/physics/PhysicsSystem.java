@@ -8,13 +8,13 @@ import ecs.Entity;
 import ecs.Transform;
 import event.EventSystem;
 import game.Game;
-import maths.Vector2;
 import physics.collision.Collider;
 import physics.collision.CollisionCell;
 import physics.collision.CollisionEvent;
 import physics.collision.CollisionGrid;
 import physics.collision.TriggerEvent;
 import physics.collision.shape.AABB;
+import utils.Vector2;
 
 public class PhysicsSystem extends ESystem {
 
@@ -52,10 +52,12 @@ public class PhysicsSystem extends ESystem {
 			CollisionGrid collGrid = Game.getPhysicsInfo().collisionGrid;
 
 			t.position.x += b.velocity.x * dt;
-			doCollisionX(collGrid, b, t);
+			doCollisionX(collGrid, b, t, (AABB)collider.shape);
 
 			t.position.y += b.velocity.y * dt;
-			doCollisionY(collGrid, b, t);
+			doCollisionY(collGrid, b, t, (AABB)collider.shape);
+			
+			System.out.println("velocity: " + b.velocity);
 
 			// collision with window ground
 			// doWindowCollision(b, t);
@@ -122,26 +124,29 @@ public class PhysicsSystem extends ESystem {
 
 	}
 
-	private void doCollisionY(CollisionGrid collGrid, Body b, Transform t) {
+	private void doCollisionY(CollisionGrid collGrid, Body b, Transform t, AABB aabb) {
 		if (b.velocity.y == 0)
 			return;
 
 		b.onGround = false;
+		
+		float xpos = t.position.x + aabb.offset.x;
+		float ypos = t.position.y + aabb.offset.y;
 
 		int iy;
 		if (b.velocity.y < 0) {
-			iy = collGrid.indexYFromPos(t.position.y);
+			iy = collGrid.indexYFromPos(ypos);
 		} else {
-			iy = collGrid.indexYFromPos(t.position.y + t.size.y);
+			iy = collGrid.indexYFromPos(ypos + aabb.size.y);
 		}
 
-		int minIx = collGrid.indexXFromPos(t.position.x);
-		int maxIx = collGrid.indexXFromPos(t.position.x + t.size.x);
+		int minIx = collGrid.indexXFromPos(xpos);
+		int maxIx = collGrid.indexXFromPos(xpos + aabb.size.x);
 		for (int x = minIx; x <= maxIx; ++x) {
 			CollisionCell cell = collGrid.cells[x][iy];
 			if (cell.solid) {
 				if (b.velocity.y > 0) {
-					t.position.y = collGrid.cellSize.y * iy - t.size.y - 1;
+					t.position.y = collGrid.cellSize.y * iy - aabb.size.y - 1;
 					b.velocity.y = 0;
 					b.onGround = true;
 				} else {
@@ -153,24 +158,27 @@ public class PhysicsSystem extends ESystem {
 		}
 	}
 
-	private void doCollisionX(CollisionGrid collGrid, Body b, Transform t) {
+	private void doCollisionX(CollisionGrid collGrid, Body b, Transform t, AABB aabb) {
 		if (b.velocity.x == 0)
 			return;
-
+		
+		float xpos = t.position.x + aabb.offset.x;
+		float ypos = t.position.y + aabb.offset.y;
+		
 		int ix;
 		if (b.velocity.x < 0) {
-			ix = collGrid.indexXFromPos(t.position.x);
+			ix = collGrid.indexXFromPos(xpos);
 		} else {
-			ix = collGrid.indexXFromPos(t.position.x + t.size.x);
+			ix = collGrid.indexXFromPos(xpos + aabb.size.x);
 		}
 
-		int minIy = collGrid.indexYFromPos(t.position.y);
-		int maxIy = collGrid.indexYFromPos(t.position.y + t.size.y);
+		int minIy = collGrid.indexYFromPos(ypos);
+		int maxIy = collGrid.indexYFromPos(ypos + aabb.size.y);
 		for (int y = minIy; y <= maxIy; ++y) {
 			CollisionCell cell = collGrid.cells[ix][y];
 			if (cell.solid) {
 				if (b.velocity.x > 0) {
-					t.position.x = collGrid.cellSize.x * ix - t.size.x - 1;
+					t.position.x = collGrid.cellSize.x * ix - aabb.size.x - 1;
 					b.velocity.x = 0;
 				} else {
 					t.position.x = collGrid.cellSize.x * (ix + 1);

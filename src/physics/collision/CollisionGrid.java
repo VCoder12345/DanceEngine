@@ -2,12 +2,12 @@ package physics.collision;
 
 import java.util.ArrayList;
 
-import maths.Vector2;
 import tiled.Layer;
 import tiled.Tile;
 import tiled.TileGrid;
 import tiled.Tileset;
 import utils.Grid;
+import utils.Vector2;
 
 public class CollisionGrid extends Grid<CollisionCell> {
 	

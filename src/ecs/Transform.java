@@ -1,6 +1,6 @@
 package ecs;
 
-import maths.Vector2;
+import utils.Vector2;
 
 public class Transform extends EComponent {
 	public Vector2 position, size;

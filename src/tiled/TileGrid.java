@@ -1,7 +1,7 @@
 package tiled;
 
-import maths.Vector2;
 import utils.Grid;
+import utils.Vector2;
 
 public class TileGrid extends Grid<Tile> {
 

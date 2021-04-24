@@ -3,7 +3,7 @@ package tiled;
 import java.awt.Color;
 import java.util.HashMap;
 
-import maths.Vector2;
+import utils.Vector2;
 
 public class GameObject {
 	public HashMap<String, String> properties = new HashMap<>();

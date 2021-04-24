@@ -1,6 +1,6 @@
 package physics.collision.shape;
 
-import maths.Vector2;
+import utils.Vector2;
 
 public class AABB extends CollisionShape {
 	public Vector2 offset, size;
