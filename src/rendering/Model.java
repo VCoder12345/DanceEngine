@@ -4,9 +4,11 @@ import java.awt.Graphics2D;
 
 import camera.CameraComponent;
 import ecs.Transform;
+import game.Game;
 import utils.Vector2;
 
 public abstract class Model {
+	public boolean optimisation = true;
 	public Model() {
 	}
 
@@ -20,7 +22,18 @@ public abstract class Model {
 		int sx = size.xToInt();
 		int sy = size.yToInt();
 		
-		render(g2d, px, py, sx, sy, camTransform);
+		if(optimisation) {
+			
+			if(px + sx > 0 && px < Game.width
+					&& py + sy > 0 && py < Game.height) {
+				
+				render(g2d, px, py, sx, sy, camTransform);
+			}
+		}else {
+			render(g2d, px, py, sx, sy, camTransform);
+		}
+
+		
 	}
 
 	

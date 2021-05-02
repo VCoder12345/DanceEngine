@@ -10,6 +10,7 @@ public class TileMap {
 	public Tileset tileset;
 	public HashMap<String, ArrayList<GameObject>> gameObjects;
 	public ArrayList<GameObject> gameObjectList;
+	public HashMap<Integer, GameObject> gameObjectsById = new HashMap<>();
 	
 	public TileMap(BufferedImage mapImage, ArrayList<Layer> layers, Tileset tileset, HashMap<String, ArrayList<GameObject>> gameObjects) {
 		super();
@@ -20,6 +21,9 @@ public class TileMap {
 		this.gameObjectList = new ArrayList<>();
 		for(ArrayList<GameObject> list : gameObjects.values()) {
 			this.gameObjectList.addAll(list);
+			for(GameObject go : list) {
+				gameObjectsById.put(go.id, go);
+			}
 		}
 	}
 	
@@ -33,6 +37,10 @@ public class TileMap {
 	
 	public ArrayList<GameObject> getGameObjects() {
 		return gameObjectList;
+	}
+	
+	public GameObject getGameObjectByID(int id) {
+		return gameObjectsById.get(id);
 	}
 	
 	public BufferedImage getImgFromGID(int gid) {

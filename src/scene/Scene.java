@@ -5,11 +5,9 @@ import java.awt.Graphics2D;
 import ecs.ESystem;
 import ecs.EcsManager;
 import ecs.Entity;
-import physics.PhysicsInfo;
 
 public abstract class Scene {
 	public EcsManager ecsManager = new EcsManager();
-	public PhysicsInfo physicsInfo;
 	
 	public void reset() {
 		ecsManager = new EcsManager();

@@ -16,19 +16,19 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import ecs.DataLocator;
 import ecs.EcsManager;
 import event.EventSystem;
 import input.Input;
-import physics.PhysicsInfo;
 import scene.Scene;
 
 public class Game implements Runnable {
-	private final float scale;
+	public static float scale;
 	public static final int width = 500;
 	public static final int height = width / 16 * 9;
 	private final int rWidth, rHeight;
 	private final int gameImgWidth, gameImgHeight, gameImgX, gameImgY;
-	private static final Color backgroundColor = Color.gray;
+	private static Color backgroundColor = Color.gray;
 	private static final String title = "DanceTeacher";
 	
 	//config-stuff
@@ -46,11 +46,15 @@ public class Game implements Runnable {
 	private static int currentSceneIndex;
 	private static boolean started = false;
 	
-	
 	public Game() {
-		Toolkit tk = Toolkit.getDefaultToolkit();
-		Dimension scrDim = tk.getScreenSize();
-		
+		this(Toolkit.getDefaultToolkit().getScreenSize(), true);
+	}
+	
+	public Game(int scrWidth, int scrHeight) {
+		this(new Dimension(scrWidth, scrHeight), false);
+	}
+	
+	public Game(Dimension scrDim, boolean undecorated) {
 		this.rWidth = scrDim.width;
 		this.rHeight = scrDim.height;
 		float wscale = (float)rWidth / (float)width;
@@ -66,7 +70,7 @@ public class Game implements Runnable {
 		frame.setTitle(title);
 		frame.setIgnoreRepaint(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setUndecorated(true);
+		frame.setUndecorated(undecorated);
 		//frame.setLayout(null);
 		
 		canvas = new Canvas();
@@ -91,8 +95,14 @@ public class Game implements Runnable {
 		//init input
 		Input input = new Input();
 		frame.addKeyListener(input);
+		frame.addMouseListener(input);
+		frame.addMouseMotionListener(input);
+		
 		canvas.addKeyListener(input);
+		canvas.addMouseListener(input);
+		canvas.addMouseMotionListener(input);
 	}
+	
 
 	@Override
 	public void run() {
@@ -161,6 +171,10 @@ public class Game implements Runnable {
 		}
 	}
 	
+	public static void setBackgroundColor(Color color) {
+		backgroundColor = color;
+	}
+	
 	public void startGame() {
 		Thread thread = new Thread(this);
 		thread.start();
@@ -172,6 +186,7 @@ public class Game implements Runnable {
 	}
 	
 	private static void start() {
+		DataLocator.init();
 		currentScene.prepare();
 		currentScene.start();
 	}
@@ -217,10 +232,6 @@ public class Game implements Runnable {
 	
 	public static EcsManager getEcsManager() {
 		return currentScene.ecsManager;
-	}
-	
-	public static PhysicsInfo getPhysicsInfo() {
-		return currentScene.physicsInfo;
 	}
 
 	public static void reloadScene() {

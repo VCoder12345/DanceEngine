@@ -16,7 +16,7 @@ public abstract class Grid<TCell> {
 	protected abstract void create();
 	
 	public int indexXFromPos(float posx) {
-		int x = (int) (posx / cellSize.x);
+		int x = (int) Math.floor(posx / cellSize.x);
 		
 		//is it out of bounds
 		if(x < 0)
@@ -28,7 +28,7 @@ public abstract class Grid<TCell> {
 	}
 	
 	public int indexYFromPos(float posy) {
-		int y =  (int) (posy / cellSize.y);
+		int y =  (int) Math.floor(posy / cellSize.y);
 		
 		//is it out of bounds
 		if(y < 0)

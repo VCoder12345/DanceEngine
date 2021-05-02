@@ -40,13 +40,15 @@ public class EcsManager {
 			sys.update(dt);
 		}
 		
-		
-		
 		for(ESystem sys : systems) {
 			sys.lateUpdate(dt);
 		}
-
 		
+		doPhysics(dt);
+
+	}
+	
+	private void doPhysics(float dt) {
 		for(ESystem sys : systems) {
 			sys.physics(dt);
 		}
@@ -54,7 +56,6 @@ public class EcsManager {
 		for(ESystem sys : systems) {
 			sys.didPhysics(dt);
 		}
-
 	}
 	
 	public void runActions(float dt) {

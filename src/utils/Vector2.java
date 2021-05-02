@@ -9,6 +9,11 @@ public class Vector2 {
 		this.x = 0;
 		this.y = 0;
 	}
+	
+	public Vector2(Point point) {
+		this.x = point.x;
+		this.y = point.y;
+	}
 
 	public Vector2(float x, float y) {
 		super();
@@ -17,11 +22,11 @@ public class Vector2 {
 	}
 	
 	public int xToInt() {
-		return (int)x;
+		return (int) Math.floor(x);
 	}
 	
 	public int yToInt() {
-		return (int)y;
+		return (int)Math.floor(y);
 	}
 	
 	public Point toPoint() {
