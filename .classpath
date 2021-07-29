@@ -7,9 +7,9 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="D:/Coding/finished/libs/XMLParser.jar"/>
-	<classpathentry kind="lib" path="D:/Coding/java/libs/JInput/jinput/jinput-2.0.9.jar" sourcepath="D:/Coding/java/libs/JInput/jinput/jinput-2.0.9-sources.jar">
+	<classpathentry kind="lib" path="D:/Coding/java/manySmallGames/DanceEngine/libs/JInput/jinput/jinput-2.0.9.jar" sourcepath="D:/Coding/java/libs/JInput/jinput/jinput-2.0.9-sources.jar">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="D:/Coding/java/libs/JInput/jinput-platforms/jinput-platform-2.0.7-natives-windows"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="D:/Coding/java/manySmallGames/DanceEngine/libs/JInput/jinput-platforms/jinput-platform-2.0.7-natives-windows"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
