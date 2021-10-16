@@ -4,10 +4,13 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import com.danceEngine.ecs.Transform;
+import com.danceEngine.rendering.ArcModel;
 import com.danceEngine.rendering.LineModel;
 import com.danceEngine.rendering.ModelTransformPair;
+import com.danceEngine.rendering.OvalModel;
 import com.danceEngine.rendering.RectModel;
 import com.danceEngine.utils.Pair;
+import com.danceEngine.utils.Vector2;
 
 public class Debug {
 	private static ArrayList<Pair<Integer, ModelTransformPair>> models = new ArrayList<>();
@@ -20,6 +23,33 @@ public class Debug {
 		LineModel model = new LineModel(color, x2, y2);
 		ModelTransformPair pair = new ModelTransformPair(model, new Transform(x1, y1, z));
 		models.add(new Pair<Integer, ModelTransformPair>(-1, pair));
+	}
+	
+	public static void drawCircle(Vector2 center, float radius, int z, Color color) {
+		if(!rendering) {
+			return;
+		}
+		
+		OvalModel model = new OvalModel(color);
+		float diameter = 2 * radius;
+		ModelTransformPair pair = new ModelTransformPair(model, new Transform(center.x - radius, center.y - radius, diameter, diameter, z));
+		models.add(new Pair<Integer, ModelTransformPair>(-1, pair));
+	}
+	
+	public static void drawArc(Vector2 center, float radius, float startAngle, float arcAngle, int z, Color color) {
+		if(!rendering) {
+			return;
+		}
+		
+		
+		ArcModel model = new ArcModel(startAngle, arcAngle, color);
+		float diameter = 2 * radius;
+		ModelTransformPair pair = new ModelTransformPair(model, new Transform(center.x - radius, center.y - radius, diameter, diameter, z));
+		models.add(new Pair<Integer, ModelTransformPair>(-1, pair));
+	}
+	
+	public static void drawLine(Vector2 start, Vector2 end, int z, Color color) {
+		drawLine(start.x, start.y, end.x, end.y, z, color);
 	}
 	
 	public static ArrayList<ModelTransformPair> getModels() {
@@ -50,5 +80,9 @@ public class Debug {
 		RectModel model = new RectModel(color);
 		ModelTransformPair pair = new ModelTransformPair(model, new Transform(x, y, sx, sy, z));
 		models.add(new Pair<Integer, ModelTransformPair>(-1, pair));
+	}
+
+	public static void drawRect(Vector2 position, Vector2 size, int z, Color color) {
+		drawRect(position.x, position.y, size.x, size.y, z, color);
 	}
 }

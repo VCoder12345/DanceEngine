@@ -7,6 +7,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -27,6 +28,7 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 	private static Vector2 mousePosition = new Vector2();
 	private static ArrayList<Joystick> joysticks = new ArrayList<>();
 	private static HashMap<String, Control> controls = new HashMap<>();
+	public static boolean enableJInput = true;
 	
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -61,7 +63,7 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 	
 	public static Vector2 getMousePosInWindow() {
 		RenderData renderData = DataLocator.getRenderData();
-		return mousePosition.div(Game.scale).div(renderData.cameraComponent.zoom);
+		return mousePosition.sub(new Vector2(Game.gameImgX, Game.gameImgY)).div(Game.scale).div(renderData.cameraComponent.zoom);
 	}
 	
 	public static Joystick getJoystick(int index) {
@@ -75,11 +77,15 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 	}
 	
 	public static void init() {
-		for(Controller controller : ControllerEnvironment.getDefaultEnvironment().getControllers()) {
-			if(controller.getType() == Controller.Type.GAMEPAD) {
-				joysticks.add(new Joystick(controller));
+		if(enableJInput) {
+			var controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
+			for(Controller controller : controllers) {
+				if(controller.getType() == Controller.Type.GAMEPAD) {
+					joysticks.add(new Joystick(controller));
+				}
 			}
 		}
+		
 	}
 	
 	public static void addControl(String name, Control control) {

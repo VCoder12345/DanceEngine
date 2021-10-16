@@ -14,6 +14,8 @@ import com.danceEngine.utils.Vector2;
 import parser.XMLNode;
 import parser.XMLParser;
 
+
+
 public class TiledLoader {
 	
 	public static TileMap loadMap(String inPath) throws IOException {

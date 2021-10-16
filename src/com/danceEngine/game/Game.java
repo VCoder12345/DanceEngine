@@ -27,8 +27,9 @@ public class Game implements Runnable {
 	public static float scale;
 	public static int width = 600;
 	public static int height = width / 16 * 9;
+	public static int gameImgX, gameImgY;
 	private int rWidth, rHeight;
-	private int gameImgWidth, gameImgHeight, gameImgX, gameImgY;
+	private int gameImgWidth, gameImgHeight;
 	private static Color backgroundColor = Color.gray;
 	private static final String title = "DanceTeacher";
 	
@@ -71,7 +72,7 @@ public class Game implements Runnable {
 		this.rHeight = scrDim.height;
 		float wscale = (float)rWidth / (float)width;
 		float hscale = (float)rHeight / (float)height;
-		this.scale = Math.min(wscale, hscale);
+		Game.scale = Math.min(wscale, hscale);
 		this.gameImgWidth = (int) (width * scale);
 		this.gameImgHeight = (int) (height * scale);
 		this.gameImgX = (rWidth - gameImgWidth) / 2;
@@ -210,7 +211,8 @@ public class Game implements Runnable {
 	
 	private static void start() {
 		DataLocator.init();
-		currentScene.prepare();
+		if(!currentScene.isPersistent() || !currentScene.wasStartedBefore())
+			currentScene.prepare();
 		currentScene.start();
 	}
 	
@@ -245,7 +247,8 @@ public class Game implements Runnable {
 	}
 	
 	private static void reset() {
-		currentScene.reset();
+		if(!currentScene.isPersistent())
+			currentScene.reset();
 		EventSystem.reset();
 		start();
 	}
@@ -265,6 +268,10 @@ public class Game implements Runnable {
 	
 	public static int getCurrentSceneIndex() {
 		return currentSceneIndex;
+	}
+	
+	public static int numScenes() {
+		return scenes.size();
 	}
 
 }

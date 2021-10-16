@@ -9,6 +9,10 @@ public class CameraComponent extends EComponent {
 		super();
 		this.zoom = zoom;
 	}
+
+	public CameraComponent() {
+		this(1.0f);
+	}
 	
 	
 }

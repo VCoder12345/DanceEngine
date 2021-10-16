@@ -26,6 +26,10 @@ public class Transform extends EComponent {
 	public Transform(float x, float y, float sx, float sy, int z) {
 		this(new Vector2(x, y), new Vector2(sx, sy), z);
 	}
+	
+	public Transform(float x, float y, float sx, float sy) {
+		this(new Vector2(x, y), new Vector2(sx, sy), 0);
+	}
 
 	public Transform(int z) {
 		this(0, 0, 0, 0, z);

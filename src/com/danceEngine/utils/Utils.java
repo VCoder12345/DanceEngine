@@ -1,5 +1,7 @@
 package com.danceEngine.utils;
 
+import java.util.ArrayList;
+
 public class Utils {
 	public static float clampf(float x, float min, float max) {
 		float nx = x;
@@ -34,5 +36,29 @@ public class Utils {
 		
 		return nv;
 	}
+	
+	public static boolean rectCircleIntersection(Vector2 rp, Vector2 rs, Vector2 cp, float r) {
+		float closestX = clampf(rp.x, rp.x + rs.x, cp.x);
+		float closestY = clampf(rp.y, rp.y + rs.y, cp.y);
+		
+		Vector2 dist = cp.sub(new Vector2(closestX, closestY));
+		float distSquared = dist.sqrLength();
+		return distSquared < r*r;
+	}
+	
+	public static <T> void addAll(ArrayList<T> list, T[] values) {
+		for(T value : values) {
+			list.add(value);
+		}
+	}
+	
+	public static boolean pointInRect(Vector2 p, Vector2 rp, Vector2 rs) {
+		return (p.x > rp.x && p.x < rp.x + rs.x && p.y > rp.y && p.y < rp.y + rs.y);
+	}
+	
+	public static boolean equalsApprox(float x, float y, float epsilon) {
+		return Math.abs(x - y) < epsilon;
+	}
+	
 
 }

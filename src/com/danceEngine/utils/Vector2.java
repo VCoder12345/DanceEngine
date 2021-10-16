@@ -26,6 +26,10 @@ public class Vector2 {
 		this.y = (float)y;
 	}
 	
+	public Vector2(float x) {
+		this(x, x);
+	}
+
 	public Vector2 rotated(float theta) {
 		float cos = (float) Math.cos(theta);
 		float sin = (float) Math.sin(theta);
@@ -54,6 +58,10 @@ public class Vector2 {
 	
 	public Vector2 mul(float s) {
 		return new Vector2(x * s, y * s);
+	}
+	
+	public Vector2 mul(Vector2 v) {
+		return new Vector2(x * v.x, y * v.y);
 	}
 	
 	public Vector2 div(float s) {
@@ -107,6 +115,26 @@ public class Vector2 {
 		divE(length());
 	}
 	
+	public boolean smaller(Vector2 v) {
+		return x < v.x && y < v.y;
+	}
+	
+	public boolean equals(Vector2 v) {
+		return x == v.x && y == v.y;
+	}
+	
+	public boolean smallerEquals(Vector2 v) {
+		return smaller(v) || equals(v);
+	}
+	
+	public boolean bigger(Vector2 v) {
+		return v.smallerEquals(this);
+	}
+	
+	public boolean biggerThan(Vector2 v) {
+		return v.smaller(this);
+	}
+	
 	public void limitE(float maxMag) {
 		float len = length();
 		if(len > maxMag) {
@@ -123,6 +151,22 @@ public class Vector2 {
 		
 		return this;
 	}
+	
+	public static float getAngleBetween(Vector2 a, Vector2 b) {
+		float cosAngle = a.dot(b) / (a.length() * b.length());
+		return (float)Math.acos(cosAngle);
+	}
+	
+	public static Vector2 fromAngle(float angle) {
+		return new Vector2(Math.cos(angle), Math.sin(angle));
+	}
+	
+	public static Vector2 parse(String text) {
+		String[] vals = text.split(",");
+		float x = Float.parseFloat(vals[0]);
+		float y = Float.parseFloat(vals[1]);
+		return new Vector2(x, y);
+	}
 
 	public Vector2 copy() {
 		// TODO Auto-generated method stub
@@ -133,6 +177,12 @@ public class Vector2 {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return "Vector2(" + x + ", " + y + ")";
+	}
+
+	public boolean equalsApprox(Vector2 targetPos, float epsilon) {
+		if(Math.abs(targetPos.x - x) > epsilon) return false;
+		if(Math.abs(targetPos.y - y) > epsilon) return false;
+		return true;
 	}
 	
 	
