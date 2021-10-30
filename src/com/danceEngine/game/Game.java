@@ -12,6 +12,7 @@ import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Stack;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -48,6 +49,8 @@ public class Game implements Runnable {
 	private static Scene currentScene;
 	private static int currentSceneIndex;
 	private static boolean started = false;
+	private static Stack<Integer> sceneStack = new Stack<>();
+	private static boolean loadedNewScene = true;
 	
 
 	
@@ -217,6 +220,7 @@ public class Game implements Runnable {
 	}
 	
 	private void update(float dt) {
+		loadedNewScene = true;
 		currentScene.update(dt);
 		currentScene.runActions(dt);
 		EventSystem.execute();
@@ -238,12 +242,33 @@ public class Game implements Runnable {
 		scenes.add(scene);
 	}
 	
-	public static void loadScene(int i) {
-		currentSceneIndex = i;
-		currentScene = scenes.get(i);
+	public static void loadSceneAdditive(int i) {
+		if(!loadedNewScene) return;
+		setCurrentScene(i);
 		if(started) {
 			reset();
 		}
+		sceneStack.add(currentSceneIndex);
+	}
+	
+	private static void setCurrentScene(int i) {
+		currentSceneIndex = i;
+		currentScene = scenes.get(i);
+		loadedNewScene = false;
+	}
+	
+	public static void popCurrentScene() {
+		if(!loadedNewScene) return;
+		sceneStack.pop();
+		setCurrentScene(sceneStack.peek());
+		EventSystem.reset();
+		currentScene.start();
+	}
+	
+	public static void loadScene(int i) {
+		if(!loadedNewScene) return;
+		if(!sceneStack.empty()) sceneStack.pop();
+		loadSceneAdditive(i);
 	}
 	
 	private static void reset() {
