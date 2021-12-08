@@ -76,6 +76,9 @@ public class EcsManager {
 		for(ESystem sys : systems) {
 			sys.didPhysics(dt);
 		}
+		
+		//update children position
+		
 	}
 	
 	public void runActions(float dt) {

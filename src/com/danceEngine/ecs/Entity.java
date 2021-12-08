@@ -15,13 +15,29 @@ public class Entity {
 	public ActionManager actionManager = new ActionManager();
 	public ArrayList<Entity> children = new ArrayList<>();
 	public boolean enabled = true;
+	public Entity parent = null;
 
 	public Entity(String name) {
 		super();
 		this.name = name;
 	}
 	
+	public Vector2 getAbsolutePos() {
+		Transform t = getComponentByType(Transform.class);
+		return parent.getComponentByType(Transform.class).position.add(t.position);
+	}
+	
+	public Transform getAbsoluteTransform() {
+		Transform t = getComponentByType(Transform.class);
+		if(parent == null)
+			return t;
+		
+		Vector2 absPos = parent.getComponentByType(Transform.class).position.add(t.position);
+		return new Transform(absPos, t);
+	}
+	
 	public void addChild(Entity entity) {
+		entity.parent = this;
 		this.children.add(entity);
 	}
 	

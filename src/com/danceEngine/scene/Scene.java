@@ -10,6 +10,7 @@ public abstract class Scene {
 	public EcsManager ecsManager = new EcsManager();
 	private boolean persistent = false;
 	private boolean startedBefore = false;
+	public boolean keepInCache = true;
 	
 	public void reset() {
 		ecsManager = new EcsManager();
