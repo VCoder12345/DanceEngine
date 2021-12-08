@@ -238,8 +238,21 @@ public class Game implements Runnable {
 		currentScene.render(g2d);
 	}
 	
-	public static void addScene(Scene scene) {
+	public static int addScene(Scene scene) {
 		scenes.add(scene);
+		return scenes.size() - 1;
+	}
+	
+	public static int addLoadScene(Scene scene) {
+		int i = addScene(scene);
+		loadScene(i);
+		return i;
+	}
+	
+	public static int addLoadSceneAdditive(Scene scene) {
+		int i = addScene(scene);
+		loadSceneAdditive(i);
+		return i;
 	}
 	
 	public static void loadSceneAdditive(int i) {
@@ -252,6 +265,9 @@ public class Game implements Runnable {
 	}
 	
 	private static void setCurrentScene(int i) {
+		if(currentScene != null && !currentScene.keepInCache) {
+			scenes.remove(currentSceneIndex);
+		}
 		currentSceneIndex = i;
 		currentScene = scenes.get(i);
 		loadedNewScene = false;

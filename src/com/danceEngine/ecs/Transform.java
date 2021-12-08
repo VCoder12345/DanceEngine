@@ -46,6 +46,9 @@ public class Transform extends EComponent {
 	public Transform(Vector2 pos, Vector2 size) {
 		this(pos, size, 0);
 	}
+	public Transform(Vector2 absPos, Transform t) {
+		this(absPos, t.size, t.orientation, t.z);
+	}
 
 
 	

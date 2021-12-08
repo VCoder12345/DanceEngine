@@ -4,6 +4,7 @@ import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 
 import com.danceEngine.camera.CameraComponent;
+import com.danceEngine.ecs.Entity;
 import com.danceEngine.ecs.Transform;
 import com.danceEngine.game.Game;
 import com.danceEngine.utils.Vector2;

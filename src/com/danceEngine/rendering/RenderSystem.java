@@ -34,7 +34,7 @@ public class RenderSystem extends ESystem {
 		PriorityQueue<ModelTransformPair> queue = new PriorityQueue<>(new MTPComparator());
 		for(Entity entity : getEntitiesWithTypes(Renderer.class, Transform.class)) {
 			Renderer r = entity.getComponentByType(Renderer.class);
-			Transform t = entity.getComponentByType(Transform.class);
+			Transform t = entity.getAbsoluteTransform();
 			
 			queue.add(new ModelTransformPair(r.model, t));
 		}
