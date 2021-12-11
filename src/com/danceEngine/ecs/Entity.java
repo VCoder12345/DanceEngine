@@ -6,6 +6,8 @@ import java.util.HashMap;
 import com.danceEngine.action.Action;
 import com.danceEngine.action.ActionManager;
 import com.danceEngine.game.Game;
+import com.danceEngine.rendering.Model;
+import com.danceEngine.rendering.Renderer;
 import com.danceEngine.utils.Vector2;
 
 public class Entity {
@@ -84,12 +86,18 @@ public class Entity {
 		components.put(component.getClass(), component);
 	}
 	
+	public void addRenderer(Model model) {
+		addComponent(new Renderer(model));
+	}
+	
+	
 	public <T> T getComponentByType(Class<T> type) {
 		return (T) components.get(type);
 	}
 	
 	public boolean hasComponentType(Class type) {
-		return components.get(type) != null;
+		var comp = components.get(type);
+		return  comp != null && comp.enabled;
 	}
 
 	public boolean hasComponentTypes(Class... types) {

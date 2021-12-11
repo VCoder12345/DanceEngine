@@ -1,16 +1,19 @@
 package com.danceEngine.scene;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import com.danceEngine.ecs.ESystem;
 import com.danceEngine.ecs.EcsManager;
 import com.danceEngine.ecs.Entity;
+import com.danceEngine.game.Game;
 
 public abstract class Scene {
 	public EcsManager ecsManager = new EcsManager();
 	private boolean persistent = false;
 	private boolean startedBefore = false;
 	public boolean keepInCache = true;
+	private Color backgroundColor = Color.gray;
 	
 	public void reset() {
 		ecsManager = new EcsManager();
@@ -20,6 +23,14 @@ public abstract class Scene {
 	
 	
 	
+	public Color getBackgroundColor() {
+		return backgroundColor;
+	}
+
+	public void setBackgroundColor(Color backgroundColor) {
+		this.backgroundColor = backgroundColor;
+	}
+
 	public boolean wasStartedBefore() {
 		return startedBefore;
 	}
@@ -34,6 +45,7 @@ public abstract class Scene {
 
 	public void start() {
 		startedBefore = true;
+		Game.setBackgroundColor(backgroundColor);
 		ecsManager.start();
 	}
 	

@@ -106,9 +106,19 @@ public class Vector2 {
 		y *= s;
 	}
 	
+	public void mulE(Vector2 v) {
+		x *= v.x;
+		y *= v.y;
+	}
+	
 	public void divE(float s) {
 		x /= s;
 		y /= s;
+	}
+	
+	public void divE(Vector2 v) {
+		x /= v.x;
+		y /= v.y;
 	}
 	
 	public void normalize() {
@@ -183,6 +193,15 @@ public class Vector2 {
 		if(Math.abs(targetPos.x - x) > epsilon) return false;
 		if(Math.abs(targetPos.y - y) > epsilon) return false;
 		return true;
+	}
+
+	public Vector2 perp() {
+		return new Vector2(-y, x);
+	}
+
+	public static Vector2 zero() {
+		// TODO Auto-generated method stub
+		return new Vector2(0, 0);
 	}
 	
 	
