@@ -47,5 +47,9 @@ public class TileMap {
 		return tileset.tiles[gid].image;
 	}
 	
+	public Tile getTile(int gid) {
+		return tileset.tiles[gid];
+	}
+	
 	
 }

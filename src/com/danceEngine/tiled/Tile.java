@@ -3,10 +3,13 @@ package com.danceEngine.tiled;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
+import com.danceEngine.physics.AABB;
+
 public class Tile {
 	public int id;
 	public BufferedImage image;
 	public HashMap<String, String> properties = new HashMap<>();
+	public AABB aabb = new AABB(0, 0, 21, 21);
 
 	public Tile(BufferedImage image, int id) {
 		super();

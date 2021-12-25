@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
+import com.danceEngine.physics.AABB;
 import com.danceEngine.utils.Vector2;
 
 import parser.XMLNode;
@@ -57,12 +58,12 @@ public class TiledLoader {
 			if(objNode.hasAttribute("width")) {
 				width = Float.parseFloat(objNode.getAttribute("width"));
 				height = Float.parseFloat(objNode.getAttribute("height"));
-				y -= height;
 			}
 			int tileIndex = 0;
 			if(objNode.hasAttribute("gid")) {
 				int gid = Integer.parseInt(objNode.getAttribute("gid"));
 				tileIndex = gid;
+				y -= height;
 			}
 			
 			GameObject gameObj = new GameObject(name, type, new Vector2(x, y), new Vector2(width, height), id, tileIndex);
@@ -131,6 +132,15 @@ public class TiledLoader {
 							String value = pNode.getAttribute("value");
 							
 							tiles[id].addProperty(name, value);
+						}
+					}else if(childNode.name.equals("objectgroup")) {
+						for(XMLNode pNode : childNode.childsWithName("object")) {
+							float x = pNode.getFloatAttribute("x");
+							float y = pNode.getFloatAttribute("y");
+							float w = pNode.getFloatAttribute("width");
+							float h = pNode.getFloatAttribute("height");
+							
+							tiles[id].aabb = new AABB(x, y, w, h);
 						}
 					}
 				}

@@ -3,6 +3,8 @@ package com.danceEngine.utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import com.danceEngine.ecs.Transform;
+
 public class Utils {
 	public static float clampf(float x, float min, float max) {
 		float nx = x;
@@ -65,6 +67,15 @@ public class Utils {
 		  T[] result = Arrays.copyOf(first, first.length + second.length);
 		  System.arraycopy(second, 0, result, first.length, second.length);
 		  return result;
+	}
+	
+	public static boolean transformTransformIntersection(Transform t1, Transform t2) {
+		return rectRectIntersection(t1.position, t1.size, t2.position, t2.size);
+	}
+	
+	public static boolean rectRectIntersection(Vector2 p1, Vector2 s1, Vector2 p2, Vector2 s2) {
+		return p1.x + s1.x > p2.x && p1.x  < p2.x + s2.x 
+				&& p1.y + s1.y > p2.y && p1.y < p2.y + s2.y;
 	}
 	
 

@@ -59,6 +59,10 @@ public class Entity {
 		tag |= oTag;
 	}
 	
+	public Model getRenderModel() {
+		return getComponentByType(Renderer.class).model;
+	}
+	
 	public boolean hasTag(int oTag) {
 		return (tag & oTag) != 0;
 	}
