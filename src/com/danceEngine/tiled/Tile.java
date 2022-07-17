@@ -10,6 +10,7 @@ public class Tile {
 	public BufferedImage image;
 	public HashMap<String, String> properties = new HashMap<>();
 	public AABB aabb = new AABB(0, 0, 21, 21);
+	public String type;
 
 	public Tile(BufferedImage image, int id) {
 		super();

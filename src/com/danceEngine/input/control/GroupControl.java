@@ -31,4 +31,6 @@ public class GroupControl implements Control {
 		return highestValue;
 	}
 
+
+
 }

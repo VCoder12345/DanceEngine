@@ -17,6 +17,10 @@ public class JoystickButtonControl extends JoystickControl {
 
 	@Override
 	public boolean isDown() {
+		if(joystick == null) {
+			//reconnect();
+			return false;
+		}
 		return joystick.isButtonDown(button);
 	}
 

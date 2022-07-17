@@ -12,6 +12,9 @@ public class ActionManager extends EComponent {
 	}
 	
 	public void removeAllActions() {
+		for(Action action : actions) {
+			action.end();
+		}
 		actions.clear();
 	}
 	
@@ -20,6 +23,12 @@ public class ActionManager extends EComponent {
 			action.execute(dt);
 		}
 		
-		actions.removeIf(a -> a.isComplete());
+		ArrayList<Action> clone = (ArrayList<Action>) actions.clone();
+		for(Action action : clone) {
+			if(action.isComplete()) {
+				action.end();
+				actions.remove(action);
+			}
+		}
 	}
 }

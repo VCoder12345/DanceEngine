@@ -29,6 +29,10 @@ public class Vector2 {
 	public Vector2(float x) {
 		this(x, x);
 	}
+	
+	public Vector2 intVec() {
+		return new Vector2(xToInt(), yToInt());
+	}
 
 	public Vector2 rotated(float theta) {
 		float cos = (float) Math.cos(theta);
@@ -202,6 +206,10 @@ public class Vector2 {
 	public static Vector2 zero() {
 		// TODO Auto-generated method stub
 		return new Vector2(0, 0);
+	}
+
+	public Vector2 negate() {
+		return new Vector2(-x, -y);
 	}
 	
 	

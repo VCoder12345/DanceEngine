@@ -72,19 +72,29 @@ public class Debug {
 		return nModels;
 	}
 
-	public static void drawRect(float x, float y, float sx, float sy, int z, Color color, boolean fill) {
+	public static void drawRect(float x, float y, float sx, float sy, int z, Color color, boolean fill, float opacity) {
 		if(!rendering) {
 			return;
 		}
 		
 		RectModel model = new RectModel(color);
+		model.opacity = opacity;
 		model.fill = fill;
 		ModelTransformPair pair = new ModelTransformPair(model, new Transform(x, y, sx, sy, z));
 		models.add(new Pair<Integer, ModelTransformPair>(-1, pair));
 	}
+	
+
+	public static void drawRect(float x, float y, float sx, float sy, int z, Color color, boolean fill) {
+		drawRect(x, y, sx, sy, z, color, fill, 1);
+	}
 
 	public static void drawRect(Vector2 position, Vector2 size, int z, Color color, boolean fill) {
-		drawRect(position.x, position.y, size.x, size.y, z, color, fill);
+		drawRect(position.x, position.y, size.x, size.y, z, color, fill, 1);
+	}
+	
+	public static void drawRect(Vector2 position, Vector2 size, int z, Color color, boolean fill, float opacity) {
+		drawRect(position.x, position.y, size.x, size.y, z, color, fill, opacity);
 	}
 	
 	public static void drawRect(Vector2 position, Vector2 size, int z, Color color) {

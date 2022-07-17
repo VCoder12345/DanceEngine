@@ -23,6 +23,8 @@ import com.danceEngine.event.EventSystem;
 import com.danceEngine.input.Input;
 import com.danceEngine.scene.Scene;
 import com.danceEngine.time.Time;
+import com.danceEngine.transition.Transition;
+import com.danceEngine.utils.Utils;
 
 public class Game implements Runnable {
 	public static float scale;
@@ -37,6 +39,7 @@ public class Game implements Runnable {
 	//config-stuff
 	public static boolean fpsDisplay = true;
 	public static boolean renderGame = true;
+	public static float timeSpeed = 1.0f;
 	
 	//window/render stuff
 	private JFrame frame;
@@ -47,10 +50,15 @@ public class Game implements Runnable {
 	//scene-stuff
 	private static ArrayList<Scene> scenes = new ArrayList<Scene>();
 	private static Scene currentScene;
-	private static int currentSceneIndex;
+	public static int currentSceneIndex;
 	private static boolean started = false;
 	private static Stack<Integer> sceneStack = new Stack<>();
 	private static boolean loadedNewScene = true;
+	
+	//transition-stuff
+	private static Transition currentTransition;
+	private static boolean transitionRunning = false;
+	private static boolean lastRenderCycle = false;
 	
 
 	
@@ -141,7 +149,7 @@ public class Game implements Runnable {
 		long prevTime = System.nanoTime();
 		long secondInNano = 1000000000;
 		final long TARGET_FPS = 60;
-		final double OPTIMAL_TIME = secondInNano / TARGET_FPS;
+		final double OPTIMAL_TIME = secondInNano / (double)TARGET_FPS;
 		double delta = 0;
 		double accumulator = 0;
 		final float dt = 0.01f;
@@ -165,8 +173,12 @@ public class Game implements Runnable {
 				}
 				
 				while(accumulator >= dt) {
-					Time.deltaTime = dt;
-					update(dt);
+					System.out.println(accumulator);
+					Time.deltaTime = dt * timeSpeed;
+					if(!transitionRunning) {
+						
+						update(dt * timeSpeed);
+					}
 					accumulator -= dt;
 				}
 				
@@ -230,12 +242,25 @@ public class Game implements Runnable {
 	
 	
 	private void render(Graphics2D g2d) {
+		BufferedImage lastImg = Utils.deepCopy(gameImage);
+		
 		//clear background
 		g2d.setColor(backgroundColor);
 		g2d.fillRect(0, 0, width, height);
 		
-		//scene-rendering
-		currentScene.render(g2d);
+		if(transitionRunning && lastRenderCycle) {
+			currentTransition.render(g2d, lastImg);
+			
+			if(currentTransition.isComplete()) {
+				transitionRunning = false;
+				loadScene(currentTransition.toScene);
+			}
+		}else {
+			lastRenderCycle = true;
+			//scene-rendering
+			currentScene.render(g2d);
+		}
+		
 	}
 	
 	public static int addScene(Scene scene) {
@@ -281,6 +306,13 @@ public class Game implements Runnable {
 		currentScene.start();
 	}
 	
+	public static void loadScene(int i, Transition transition) {
+		currentTransition = transition;
+		transition.toScene = i;
+		transitionRunning = true;
+		lastRenderCycle = false;
+	}
+	
 	public static void loadScene(int i) {
 		if(!loadedNewScene) return;
 		if(!sceneStack.empty()) sceneStack.pop();
@@ -313,6 +345,10 @@ public class Game implements Runnable {
 	
 	public static int numScenes() {
 		return scenes.size();
+	}
+
+	public static void exit() {
+		System.exit(0);
 	}
 
 }

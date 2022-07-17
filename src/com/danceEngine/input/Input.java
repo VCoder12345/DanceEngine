@@ -29,11 +29,17 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 	private static ArrayList<Joystick> joysticks = new ArrayList<>();
 	private static HashMap<String, Control> controls = new HashMap<>();
 	public static boolean enableJInput = true;
+	private static int mouseBtn = MouseEvent.NOBUTTON;
 	
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	
+	public static int getNumJoysticks() {
+		return joysticks.size();
 	}
 
 	@Override
@@ -54,6 +60,10 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 	
 	public static boolean isMouseDown() {
 		return mousePressed;
+	}
+	
+	public static int getMouseBtn() {
+		return mouseBtn;
 	}
 	
 	public static Vector2 getMousePos() {
@@ -107,13 +117,15 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
+		mousePosition = new Vector2(e.getPoint());
+		mouseBtn = e.getButton();
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		mousePressed = true;
 		mousePosition = new Vector2(e.getPoint());
+		mouseBtn = e.getButton();
 		EventSystem.submit(new MousePressedEvent());
 	}
 
@@ -121,6 +133,7 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 	public void mouseReleased(MouseEvent e) {
 		mousePressed = false;
 		mousePosition = new Vector2(e.getPoint());
+		mouseBtn = MouseEvent.NOBUTTON;
 		EventSystem.submit(new MouseReleasedEvent());
 	}
 
@@ -138,8 +151,7 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		mousePosition = new Vector2(e.getPoint());
 	}
 
 	@Override
@@ -149,7 +161,8 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
-		EventSystem.submit(new MouseWheelMoved(e.getScrollAmount()));
+		
+		EventSystem.submit(new MouseWheelMoved(e.getWheelRotation()));
 	}
 
 }

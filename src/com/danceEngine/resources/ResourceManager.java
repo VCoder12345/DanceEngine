@@ -1,8 +1,12 @@
 package com.danceEngine.resources;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
@@ -12,6 +16,15 @@ public class ResourceManager {
 	
 	public static BufferedImage getImage(String name) {
 		return images.get(name);
+	}
+	
+	public static BufferedImage[] getImages(String...names) {
+		BufferedImage[] imgs = new BufferedImage[names.length];
+		for(int i = 0; i < imgs.length; ++i) {
+			imgs[i] = getImage(names[i]);
+		}
+		
+		return imgs;
 	}
 	
 	public static BufferedImage loadImage(String path, String name) {
@@ -42,6 +55,36 @@ public class ResourceManager {
 				id++;
 			}
 		}
+		
+		
+	}
+	
+	public static void loadSpriteSheet(String path, String configFile)  {
+		BufferedImage image = loadImageFromFile(path);
+		
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(new File(configFile)));
+			
+			String line;
+			while((line = reader.readLine()) != null) {
+				String[] assignParts = line.split(" = ");
+				String name = assignParts[0];
+				String[] coords = assignParts[1].split(" ");
+				int x = Integer.parseInt(coords[0]);
+				int y = Integer.parseInt(coords[1]);
+				int w = Integer.parseInt(coords[2]);
+				int h = Integer.parseInt(coords[3]);
+
+				BufferedImage sprite = image.getSubimage(x, y, w, h);
+				
+				images.put(name, sprite);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
  	
 	private static BufferedImage loadImageFromFile(String path) {

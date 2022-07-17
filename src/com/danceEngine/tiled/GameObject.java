@@ -24,6 +24,7 @@ public class GameObject {
 		return position.copy();
 	}
 	
+	
 	public Vector2 getSize() {
 		return size.copy();
 	}

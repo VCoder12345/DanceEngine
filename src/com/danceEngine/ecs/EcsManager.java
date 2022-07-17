@@ -82,7 +82,7 @@ public class EcsManager {
 	}
 	
 	public void runActions(float dt) {
-		for(Entity entity : entities) {
+		for(Entity entity : getEntities()) {
 			entity.actionManager.run(dt);
 		}
 		

@@ -10,6 +10,7 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 import com.danceEngine.physics.AABB;
+import com.danceEngine.utils.Utils;
 import com.danceEngine.utils.Vector2;
 
 import parser.XMLNode;
@@ -95,7 +96,7 @@ public class TiledLoader {
 		int tileheight = tNode.getIntAttribute("tileheight");
 		String imgSource = tNode.firstChildWithName("image").getAttribute("source");
 		imgSource = "res/maps/" + imgSource.substring(imgSource.lastIndexOf('/') + 1);
-		System.out.println(imgSource);
+		//System.out.println(imgSource);
 		BufferedImage img = ImageIO.read(new File(imgSource));
 		int spacing = 0;
 		if(tNode.hasAttribute("spacing")) {
@@ -125,6 +126,12 @@ public class TiledLoader {
 		if(tNode.hasChildWithName("tile")) {
 			for(XMLNode tileNode : tNode.childsWithName("tile")) {
 				int id = Integer.parseInt(tileNode.getAttribute("id")) + 1;
+				
+				if (tileNode.hasAttribute("type")) {
+					String type = tileNode.getAttribute("type");
+					tiles[id].type = type;
+				}
+				
 				for(XMLNode childNode : tileNode.getChilds()) {
 					if(childNode.name.equals("properties")) {
 						for(XMLNode pNode : childNode.childsWithName("property")) {
@@ -139,6 +146,7 @@ public class TiledLoader {
 							float y = pNode.getFloatAttribute("y");
 							float w = pNode.getFloatAttribute("width");
 							float h = pNode.getFloatAttribute("height");
+							
 							
 							tiles[id].aabb = new AABB(x, y, w, h);
 						}

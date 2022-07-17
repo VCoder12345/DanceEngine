@@ -5,14 +5,21 @@ import com.danceEngine.input.joystick.Joystick;
 
 public abstract class JoystickControl implements Control {
 	protected int joystickId;
-	protected Joystick joystick;
+	protected Joystick joystick = null;
 
 	public JoystickControl(int joystickId) {
 		super();
 		this.joystickId = joystickId;
-		this.joystick = Input.getJoystick(joystickId);
+		if(joystickId < Input.getNumJoysticks()) {
+			this.joystick = Input.getJoystick(joystickId);
+		}
 	}
 	
-	
+
+	public void reconnect() {
+		if(joystickId < Input.getNumJoysticks()) {
+			this.joystick = Input.getJoystick(joystickId);
+		}
+	}
 
 }

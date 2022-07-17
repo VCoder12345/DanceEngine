@@ -15,7 +15,12 @@ public class JoystickAxisControl extends JoystickControl {
 
 	@Override
 	public float getValue() {
+		if(joystick == null) {
+			//reconnect();
+			return 0;
+		}
 		return joystick.getAxis(axisName);
 	}
+
 
 }

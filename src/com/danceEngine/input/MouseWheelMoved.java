@@ -3,11 +3,11 @@ package com.danceEngine.input;
 import com.danceEngine.event.Event;
 
 public class MouseWheelMoved extends Event {
-	public int scrollAmount;
+	public int wheelRotation;
 
-	public MouseWheelMoved(int scrollAmount) {
+	public MouseWheelMoved(int wheelRotation) {
 		super();
-		this.scrollAmount = scrollAmount;
+		this.wheelRotation = wheelRotation;
 	}
 	
 	
