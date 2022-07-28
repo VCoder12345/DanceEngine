@@ -5,4 +5,5 @@ public interface Action {
 	public boolean isComplete();
 	public default void reset() {}
 	public default void end() {}
+	public default void start() {}
 }

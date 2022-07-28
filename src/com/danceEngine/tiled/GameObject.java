@@ -41,6 +41,10 @@ public class GameObject {
 		return Float.parseFloat(properties.get(name));
 	}
 	
+	public boolean getBoolProperty(String name) {
+		return properties.get(name).equals("true");
+	}
+	
 	public int getIntProperty(String name) {
 		return Integer.parseInt(properties.get(name));
 	}

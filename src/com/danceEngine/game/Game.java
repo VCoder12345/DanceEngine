@@ -23,6 +23,7 @@ import com.danceEngine.event.EventSystem;
 import com.danceEngine.input.Input;
 import com.danceEngine.scene.Scene;
 import com.danceEngine.time.Time;
+import com.danceEngine.transition.FadeToBlackTransition;
 import com.danceEngine.transition.Transition;
 import com.danceEngine.utils.Utils;
 
@@ -45,7 +46,7 @@ public class Game implements Runnable {
 	private JFrame frame;
 	private Canvas canvas;
 	private BufferStrategy buffer;
-	private BufferedImage gameImage;
+	private BufferedImage gameImage, lastImg;
 	
 	//scene-stuff
 	private static ArrayList<Scene> scenes = new ArrayList<Scene>();
@@ -173,7 +174,6 @@ public class Game implements Runnable {
 				}
 				
 				while(accumulator >= dt) {
-					System.out.println(accumulator);
 					Time.deltaTime = dt * timeSpeed;
 					if(!transitionRunning) {
 						
@@ -242,7 +242,7 @@ public class Game implements Runnable {
 	
 	
 	private void render(Graphics2D g2d) {
-		BufferedImage lastImg = Utils.deepCopy(gameImage);
+
 		
 		//clear background
 		g2d.setColor(backgroundColor);
@@ -259,6 +259,10 @@ public class Game implements Runnable {
 			lastRenderCycle = true;
 			//scene-rendering
 			currentScene.render(g2d);
+			
+			if(transitionRunning) {
+				lastImg = Utils.deepCopy(gameImage);
+			}
 		}
 		
 	}
@@ -305,6 +309,7 @@ public class Game implements Runnable {
 		EventSystem.reset();
 		currentScene.start();
 	}
+
 	
 	public static void loadScene(int i, Transition transition) {
 		currentTransition = transition;
@@ -339,6 +344,10 @@ public class Game implements Runnable {
 		loadScene(currentSceneIndex);
 	}
 	
+	public static void reloadScene(Transition transition) {
+		loadScene(currentSceneIndex, transition);
+	}
+	
 	public static int getCurrentSceneIndex() {
 		return currentSceneIndex;
 	}
@@ -350,5 +359,7 @@ public class Game implements Runnable {
 	public static void exit() {
 		System.exit(0);
 	}
+
+
 
 }

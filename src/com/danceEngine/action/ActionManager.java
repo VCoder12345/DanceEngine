@@ -8,6 +8,7 @@ public class ActionManager extends EComponent {
 	private ArrayList<Action> actions = new ArrayList<>();
 	
 	public void addAction(Action action) {
+		action.start();
 		actions.add(action);
 	}
 	
@@ -19,11 +20,12 @@ public class ActionManager extends EComponent {
 	}
 	
 	public void run(float dt) {
-		for(Action action : actions) {
+		ArrayList<Action> clone = (ArrayList<Action>) actions.clone();
+		for(Action action : clone) {
 			action.execute(dt);
 		}
 		
-		ArrayList<Action> clone = (ArrayList<Action>) actions.clone();
+
 		for(Action action : clone) {
 			if(action.isComplete()) {
 				action.end();

@@ -7,6 +7,15 @@ public class SequenceAction implements Action {
 	
 	public SequenceAction(Action...actions) {
 		this.actions = actions;
+		
+
+	}
+	
+	@Override
+	public void start() {
+		for(Action action : actions) {
+			action.start();
+		}
 	}
 
 	@Override

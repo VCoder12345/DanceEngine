@@ -59,6 +59,10 @@ public class ResourceManager {
 		
 	}
 	
+	public static void saveImage(BufferedImage image, String name) {
+		images.put(name, image);
+	}
+	
 	public static void loadSpriteSheet(String path, String configFile)  {
 		BufferedImage image = loadImageFromFile(path);
 		

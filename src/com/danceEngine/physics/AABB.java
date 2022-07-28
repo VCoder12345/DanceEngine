@@ -1,5 +1,6 @@
 package com.danceEngine.physics;
 
+import com.danceEngine.ecs.Transform;
 import com.danceEngine.utils.Vector2;
 
 public class AABB {
@@ -15,6 +16,18 @@ public class AABB {
 		this.pos = pos;
 		this.size = size;
 	}
+
+	public AABB scale(float x) {
+		return new AABB(pos.mul(x), size.mul(x));
+	}
 	
+	
+	public Vector2 getMin(Transform t) {
+		return t.position.add(pos);
+	}
+	
+	public Vector2 getMax(Transform t) {
+		return getMin(t).add(size);
+	}
 	
 }
