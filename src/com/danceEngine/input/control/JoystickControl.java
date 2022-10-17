@@ -3,7 +3,7 @@ package com.danceEngine.input.control;
 import com.danceEngine.input.Input;
 import com.danceEngine.input.joystick.Joystick;
 
-public abstract class JoystickControl implements Control {
+public abstract class JoystickControl extends Control {
 	protected int joystickId;
 	protected Joystick joystick = null;
 

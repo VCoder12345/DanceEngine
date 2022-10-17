@@ -10,11 +10,13 @@ import java.awt.event.MouseWheelListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import com.danceEngine.ecs.DataLocator;
 import com.danceEngine.event.EventSystem;
 import com.danceEngine.game.Game;
 import com.danceEngine.input.control.Control;
+import com.danceEngine.input.control.ControlEvent;
 import com.danceEngine.input.joystick.Joystick;
 import com.danceEngine.rendering.RenderData;
 import com.danceEngine.utils.Vector2;
@@ -83,6 +85,22 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 	public static void update() {
 		for(Joystick joystick : joysticks) {
 			joystick.update();
+		}
+		
+		for(Entry<String, Control> entry : controls.entrySet()) {
+			Control control = entry.getValue();
+			
+			if(!control.sendsEvents) {
+				continue;
+			}
+			if(control.isDown()) {
+				if(!control.wasDown) {
+					EventSystem.submit(new ControlEvent(entry.getKey()));
+				}
+				control.wasDown = true;
+			}else {
+				control.wasDown = false;
+			}
 		}
 	}
 	

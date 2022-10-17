@@ -1,10 +1,15 @@
 package com.danceEngine.input.control;
 
-public class GroupControl implements Control {
+public class GroupControl extends Control {
 	private Control[] controls;
 	
-	public GroupControl(Control...controls) {
+	public GroupControl(boolean sendsEvents, Control...controls) {
+		this.sendsEvents = sendsEvents;
 		this.controls = controls;
+	}
+	
+	public GroupControl(Control...controls) {
+		this(false, controls);
 	}
 
 	@Override

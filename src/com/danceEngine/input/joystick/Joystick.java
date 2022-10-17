@@ -23,12 +23,13 @@ public class Joystick {
 	public static final int RB = 5;
 	public static final int BACK = 6;
 	public static final int START = 7;
-	public static final int LT = 8;
-	public static final int RT = 9;
+	public static final int LS = 8;
+	public static final int RS = 9;
 	public static final int LEFT = 10;
 	public static final int RIGHT = 11;
 	public static final int UP = 12;
 	public static final int DOWN = 13;
+	//RT & RS sind analog --> axis: "z"
 	
 	
 	public Joystick(Controller controller) {
@@ -50,6 +51,7 @@ public class Joystick {
 			Identifier id = comp.getIdentifier();
 			String name = id.getName();
 			if(comp.isAnalog()) {
+				System.out.println(name);
 				axes.put(name, value);
 			}else {
 				if(name == "pov") {
@@ -70,6 +72,7 @@ public class Joystick {
 				}else {
 					boolean pressed = (value == 1);
 					int btn = Integer.parseInt(name);
+					System.out.println(btn);
 					buttons[btn] = pressed;
 					EventSystem.submit(new JoystickBtnEvent(btn, pressed));
 				}

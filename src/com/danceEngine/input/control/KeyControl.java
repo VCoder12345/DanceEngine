@@ -2,7 +2,7 @@ package com.danceEngine.input.control;
 
 import com.danceEngine.input.Input;
 
-public class KeyControl implements Control {
+public class KeyControl extends Control {
 	private int key;
 	private float pressValue;
 	

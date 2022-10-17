@@ -17,14 +17,14 @@ import java.util.Stack;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.danceEngine.transition.*;
 import com.danceEngine.ecs.DataLocator;
 import com.danceEngine.ecs.EcsManager;
 import com.danceEngine.event.EventSystem;
 import com.danceEngine.input.Input;
 import com.danceEngine.scene.Scene;
 import com.danceEngine.time.Time;
-import com.danceEngine.transition.FadeToBlackTransition;
-import com.danceEngine.transition.Transition;
+
 import com.danceEngine.utils.Utils;
 
 public class Game implements Runnable {
