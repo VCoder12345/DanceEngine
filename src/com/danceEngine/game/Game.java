@@ -30,7 +30,8 @@ import com.danceEngine.utils.Utils;
 public class Game implements Runnable {
 	public static float scale;
 	public static int width = 600;
-	public static int height = width / 16 * 9;
+	public static float whRatio = 9.0f / 16.0f;
+	public static int height = (int) (width * whRatio);
 	public static int gameImgX, gameImgY;
 	private int rWidth, rHeight;
 	private int gameImgWidth, gameImgHeight;
@@ -79,7 +80,7 @@ public class Game implements Runnable {
 	public Game(int width, Dimension scrDim, boolean undecorated) {
 		if(!renderGame)
 			return;
-		height = width / 16 * 9;
+		height = (int) (width * whRatio);
 		this.rWidth = scrDim.width;
 		this.rHeight = scrDim.height;
 		float wscale = (float)rWidth / (float)width;
@@ -129,6 +130,10 @@ public class Game implements Runnable {
 		canvas.addMouseMotionListener(input);
 		canvas.addMouseWheelListener(input);
 		Input.init();
+	}
+	
+	public static void removeCurrentScene() {
+		scenes.remove(currentScene);
 	}
 	
 	public static void setWidth(int width) {

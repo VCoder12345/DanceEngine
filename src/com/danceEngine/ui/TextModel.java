@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.Toolkit;
+import java.util.Map;
 
 import com.danceEngine.ecs.Transform;
 import com.danceEngine.rendering.ColorModel;
@@ -22,6 +25,9 @@ public class TextModel extends UIColorModel {
 
 	@Override
 	protected void render(Graphics2D g2d, int px, int py, int sx, int sy, Transform camT) {
+		//g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, 
+			    RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
 		FontMetrics metrics = g2d.getFontMetrics(font);
 		int x = px + (sx - metrics.stringWidth(text)) / 2;
 		int y = py + (metrics.getAscent() + (sy - (metrics.getAscent() + metrics.getDescent())) / 2);

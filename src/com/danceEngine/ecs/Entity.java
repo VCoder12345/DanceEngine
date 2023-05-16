@@ -29,6 +29,10 @@ public class Entity {
 		return parent.getComponentByType(Transform.class).position.add(t.position);
 	}
 	
+	public Transform transform() {
+		return getComponentByType(Transform.class);
+	}
+	
 	public Transform getAbsoluteTransform() {
 		Transform t = getComponentByType(Transform.class);
 		if(parent == null)
@@ -43,10 +47,21 @@ public class Entity {
 		this.children.add(entity);
 	}
 	
+	
 	public ArrayList<Entity> getChildren() {
 		return children;
 	}
 	
+	public <T extends EComponent> ArrayList<T> getChildrenComponent(Class<T> claz) {
+		ArrayList<T> list = new ArrayList<>();
+		for(Entity child : getChildren()) {
+			if(child.hasComponentType(claz)) {
+				list.add(child.getComponentByType(claz));
+			}
+		}
+		
+		return list;
+	}
 	public void addAction(Action action) {
 		actionManager.addAction(action);
 	}
@@ -99,6 +114,10 @@ public class Entity {
 		return (T) components.get(type);
 	}
 	
+	public <T extends EComponent> void setComponentTo(Class<T> type, T component) {
+		components.replace(type, component);
+	}
+	
 	public boolean hasComponentType(Class type) {
 		var comp = components.get(type);
 		return  comp != null && comp.enabled;
@@ -112,6 +131,20 @@ public class Entity {
 		}
 		
 		return true;
+	}
+
+	public void removeChild(Entity entity) {
+		children.remove(entity);
+	}
+
+	public Entity getChildWithName(String name) {
+		for(Entity child : children) {
+			if(child.name.equals(name)) {
+				return child;
+			}
+		}
+		
+		return null;
 	}
 	
 	

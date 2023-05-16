@@ -11,8 +11,16 @@ public class EcsManager {
 	
 	
 	public ArrayList<Entity> getEntitiesWithTypes(Class...types) {
+		return getEntitiesWithTypes(getEntities(), types);
+	}
+	
+	public ArrayList<Entity> getAllEntitiesWithTypes(Class...types) {
+		return getEntitiesWithTypes(getAllEntities(), types);
+	}
+	
+	public ArrayList<Entity> getEntitiesWithTypes(ArrayList<Entity> entities, Class...types) {
 		ArrayList<Entity> tEntities = new ArrayList<>();
-		for(Entity entity : getEntities()) {
+		for(Entity entity : entities) {
 			if(entity.hasComponentTypes(types)) {
 				tEntities.add(entity);
 			}
@@ -23,6 +31,10 @@ public class EcsManager {
 	
 	public ArrayList<Entity> getEntities() {
 		return getActiveEntities(entities);
+	}
+	
+	public ArrayList<Entity> getAllEntities() {
+		return getAllEntities(entities);
 	}
 	
 	public ArrayList<Entity> getActiveEntities(ArrayList<Entity> ents) {
@@ -37,19 +49,30 @@ public class EcsManager {
 		return activeEntities;
 	}
 	
+	public ArrayList<Entity> getAllEntities(ArrayList<Entity> ents) {
+		ArrayList<Entity> activeEntities = new ArrayList<>();
+		for(Entity entity : ents) {
+			activeEntities.add(entity);
+			activeEntities.addAll(getAllEntities(entity.getChildren()));
+		}
+		
+		return activeEntities;
+	}
+	
 	public Entity getEntityWithName(String name) {
 		return entityNameMap.get(name);
 	}
 	
 	public ArrayList<Entity> getEntitiesWithTag(int tag) {
 		ArrayList<Entity> tEntities = new ArrayList<>();
-		for(Entity entity : entities) {
+		for(Entity entity : getEntities()) {
 			if(entity.hasTag(tag)) {
 				tEntities.add(entity);
 			}
 		}
 		return tEntities;
 	}
+	
 	
 	public void update(float dt) {
 		for(ESystem sys : systems) {
@@ -70,8 +93,17 @@ public class EcsManager {
 	
 	private void doPhysics(float dt) {
 		for(ESystem sys : systems) {
+			sys.prePhysics(dt);
+		}
+		
+		for(ESystem sys : systems) {
+			sys.didPrePhysics(dt);
+		}
+		
+		for(ESystem sys : systems) {
 			sys.physics(dt);
 		}
+		
 		
 		for(ESystem sys : systems) {
 			sys.didPhysics(dt);
@@ -109,6 +141,10 @@ public class EcsManager {
 	
 	public void addEntity(Entity entity) {
 		entities.add(entity);
+		addEntityName(entity);
+	}
+	
+	private void addEntityName(Entity entity) {
 		entityNameMap.put(entity.name, entity);
 	}
 	
@@ -123,7 +159,12 @@ public class EcsManager {
 	}
 	
 	public void removeEntity(Entity entity) {
-		entities.remove(entity);
-		entityNameMap.remove(entity.name);
+		if(entity.parent == null) {
+			entities.remove(entity);
+			entityNameMap.remove(entity.name);
+		}else {
+			entity.parent.removeChild(entity);
+		}
+		
 	}
 }

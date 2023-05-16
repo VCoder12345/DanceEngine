@@ -26,6 +26,10 @@ public class AABB {
 		return t.position.add(pos);
 	}
 	
+	public Vector2 getMin(Vector2 p) {
+		return p.add(pos);
+	}
+	
 	public Vector2 getMax(Transform t) {
 		return getMin(t).add(size);
 	}

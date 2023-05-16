@@ -50,7 +50,9 @@ public class Transform extends EComponent {
 		this(absPos, t.size, t.orientation, t.z);
 	}
 
-
+	public Vector2 center() {
+		return position.add(size.div(2));
+	}
 	
 	
 }

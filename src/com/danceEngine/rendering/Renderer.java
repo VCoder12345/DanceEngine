@@ -15,7 +15,11 @@ public class Renderer extends EComponent {
 	
 	
 	public static Renderer rectRenderer(Color color) {
-		return new Renderer(new RectModel(color));
+		return new Renderer(new RectModel(color, true));
+	}
+	
+	public static Renderer rectRenderer(Color color, boolean fill) {
+		return new Renderer(new RectModel(color, fill));
 	}
 	
 	public static Renderer spriteRenderer(BufferedImage sprite) {

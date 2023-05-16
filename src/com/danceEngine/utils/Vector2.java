@@ -1,8 +1,14 @@
 package com.danceEngine.utils;
 
 import java.awt.Point;
+import java.io.Serializable;
 
-public class Vector2 {
+public class Vector2 implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7932895642288081066L;
 	public float x, y;
 	
 	public Vector2() {
@@ -74,6 +80,10 @@ public class Vector2 {
 	
 	public Vector2 cross(Vector2 v) {
 		return new Vector2(x * v.y, y * v.x);
+	}
+	
+	public float perpDot(Vector2 v) {
+		return x * v.y - y * v.x; 
 	}
 	
 	public float sqrLength() {
@@ -210,6 +220,10 @@ public class Vector2 {
 
 	public Vector2 negate() {
 		return new Vector2(-x, -y);
+	}
+
+	public float heading() {
+		return (float) Math.atan2(y, x);
 	}
 	
 	

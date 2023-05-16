@@ -24,6 +24,16 @@ public class ESystem {
 	public void physics(float dt) {
 	}
 	
+	
+	
+	public void prePhysics(float dt) {
+		
+	}
+	
+	public void didPrePhysics(float dt) {
+		
+	}
+	
 	public void didPhysics(float dt) {
 	}
 	
@@ -37,6 +47,11 @@ public class ESystem {
 	public ArrayList<Entity> getEntitiesWithTypes(Class...types) {
 		return Game.getEcsManager().getEntitiesWithTypes(types);
 	}
+	
+	public ArrayList<Entity> getAllEntitiesWithTypes(Class...types) {
+		return Game.getEcsManager().getAllEntitiesWithTypes(types);
+	}
+	
 	
 	public ArrayList<Entity> getEntitiesWithTag(int tag) {
 		return Game.getEcsManager().getEntitiesWithTag(tag);

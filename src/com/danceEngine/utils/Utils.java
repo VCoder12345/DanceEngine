@@ -144,6 +144,15 @@ public class Utils {
 	public static double log(double base, double x) {
 		return Math.log10(x) / Math.log10(base);
 	}
+
+	public static Vector2 clampf(Vector2 val, Vector2 min, Vector2 max) {
+		Vector2 newVal = Vector2.zero();
+		
+		newVal.x = clampf(val.x, min.x, max.x);
+		newVal.y = clampf(val.y, min.y, max.y);
+		
+		return newVal;
+	}
 	
 
 }

@@ -51,7 +51,6 @@ public class Joystick {
 			Identifier id = comp.getIdentifier();
 			String name = id.getName();
 			if(comp.isAnalog()) {
-				System.out.println(name);
 				axes.put(name, value);
 			}else {
 				if(name == "pov") {
@@ -72,7 +71,6 @@ public class Joystick {
 				}else {
 					boolean pressed = (value == 1);
 					int btn = Integer.parseInt(name);
-					System.out.println(btn);
 					buttons[btn] = pressed;
 					EventSystem.submit(new JoystickBtnEvent(btn, pressed));
 				}

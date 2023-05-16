@@ -38,4 +38,12 @@ public class Tile {
 	public String getProperty(String name) {
 		return properties.get(name);
 	}
+	
+	public float getFloatProperty(String name) {
+		return Float.parseFloat(getProperty(name));
+	}
+	
+	public int getIntProperty(String name) {
+		return Integer.parseInt(getProperty(name));
+	}
 }

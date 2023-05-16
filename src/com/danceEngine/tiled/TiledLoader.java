@@ -50,7 +50,13 @@ public class TiledLoader {
 		
 		for(XMLNode objNode : node.getChilds()) {
 			String name = objNode.getAttribute("name");
-			String type = objNode.getAttribute("type");
+			String type;
+			if(objNode.hasAttribute("type")) {
+				type = objNode.getAttribute("type");
+			}else {
+				type = objNode.getAttribute("class");
+			}
+			
 			int id = Integer.parseInt(objNode.getAttribute("id"));
 			float x = Float.parseFloat(objNode.getAttribute("x"));
 			float y = Float.parseFloat(objNode.getAttribute("y"));
@@ -98,6 +104,7 @@ public class TiledLoader {
 		imgSource = "res/maps/" + imgSource.substring(imgSource.lastIndexOf('/') + 1);
 		//System.out.println(imgSource);
 		BufferedImage img = ImageIO.read(new File(imgSource));
+
 		int spacing = 0;
 		if(tNode.hasAttribute("spacing")) {
 			spacing = tNode.getIntAttribute("spacing");
@@ -129,6 +136,9 @@ public class TiledLoader {
 				
 				if (tileNode.hasAttribute("type")) {
 					String type = tileNode.getAttribute("type");
+					tiles[id].type = type;
+				}else if (tileNode.hasAttribute("class")) {
+					String type = tileNode.getAttribute("class");
 					tiles[id].type = type;
 				}
 				
@@ -176,7 +186,7 @@ public class TiledLoader {
 		return new Layer(width, height, indices);
 	}
 
-	public static BufferedImage imageFromLayers(ArrayList<Layer> layers, Tileset tileset) {
+	public static BufferedImage imageFromLayers(ArrayList<Layer> layers, Tileset tileset) throws IOException {
 		int imgW = layers.get(0).width * tileset.tilewidth;
 		int imgH = layers.get(0).height * tileset.tileheight;
 		BufferedImage finalImg = new BufferedImage(imgW, imgH, BufferedImage.TYPE_INT_ARGB);

@@ -16,11 +16,11 @@ public class TriangleModel extends ColorModel {
 		this.triangle = triangle;
 	}
 	
+
 	public TriangleModel(int dir, Color color) {
 		super(color);
-		
+		this.triangle = new Triangle(dir);
 	}
-
 
 
 	@Override

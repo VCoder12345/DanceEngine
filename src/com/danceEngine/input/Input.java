@@ -68,6 +68,10 @@ public class Input implements KeyListener, MouseListener, MouseMotionListener, M
 		return mouseBtn;
 	}
 	
+	public static Vector2 getUnproccessedMousePos() {
+		return mousePosition;
+	}
+	
 	public static Vector2 getMousePos() {
 		RenderData renderData = DataLocator.getRenderData();
 		return getMousePosInWindow().add(renderData.cameraT.position);

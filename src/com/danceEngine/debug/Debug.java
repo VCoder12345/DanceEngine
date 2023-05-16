@@ -77,7 +77,7 @@ public class Debug {
 			return;
 		}
 		
-		RectModel model = new RectModel(color);
+		RectModel model = new RectModel(color, true);
 		model.opacity = opacity;
 		model.fill = fill;
 		ModelTransformPair pair = new ModelTransformPair(model, new Transform(x, y, sx, sy, z));
