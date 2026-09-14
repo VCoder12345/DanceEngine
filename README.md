@@ -19,24 +19,6 @@ The engine is structured as a collection of reusable systems rather than being t
 
 Most of the engine is implemented using only the Java standard library. The main external dependency is used for controller input.
 
-## Example Systems
-
-The engine supports combining its systems to build game logic such as:
-
-```text
-Entity
- ├── Components
- ├── Animation State Machine
- ├── Behavior Tree
- └── Event-driven interactions
-
-Resources
- ├── Tiled Maps
- ├── Textures
- ├── Audio
- └── Other Game Assets
-```
-
 ## Background
 
 This project was an early exploration of game-engine architecture and reusable software systems. It was developed entirely in Java and served as a foundation for experimenting with ECS, AI, resource management, event-driven design, and game-state architecture.
